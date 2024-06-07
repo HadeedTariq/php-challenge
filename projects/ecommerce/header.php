@@ -1,4 +1,4 @@
-<?php include "./config/db.php" ?>
+<?php include "./config/utils.php" ?>
 
 <?php
 session_start();
@@ -43,7 +43,8 @@ if (isset($_SESSION['email']) && isset($_SESSION['id'])) {
         .header {
             background-color: #333;
             color: #fff;
-            padding: 10px 0;
+            padding: 16px 0;
+            height: 40px;
         }
 
         .container {
@@ -71,6 +72,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['id'])) {
 
         .nav li {
             margin-left: 20px;
+            cursor: pointer;
         }
 
         .nav a {
@@ -130,10 +132,10 @@ if (isset($_SESSION['email']) && isset($_SESSION['id'])) {
                 </div>
                 <nav class="nav">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <a href="/cart.php">
+                            <li>Cart</li>
+                        </a>
+                        <li>My Products</li>
                     </ul>
                 </nav>
                 <div class="search-bar">

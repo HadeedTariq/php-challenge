@@ -6,12 +6,15 @@ $userId = -1;
 $cartResponse = "";
 if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
+} else {
+    redirect("/");
+    exit();
 }
 if (isset($_GET['message'])) {
     $cartResponse = $_GET['message'];
 }
 $products = [];
-$sql = "SELECT * FROM products where productOwner!=$userId";
+$sql = "SELECT *,cart.id FROM cart JOIN products ON cart.product_id=products.product_id";
 $response = mysqli_query($conn, $sql);
 while ($product =  mysqli_fetch_assoc($response)) {
     array_push($products, $product);
@@ -84,8 +87,8 @@ while ($product =  mysqli_fetch_assoc($response)) {
             margin-bottom: 20px;
         }
 
-        .add-to-cart {
-            background-color: #4CAF50;
+        .remove-from-cart {
+            background-color: red;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -95,8 +98,8 @@ while ($product =  mysqli_fetch_assoc($response)) {
             transition: background-color 0.3s;
         }
 
-        .add-to-cart:hover {
-            background-color: #45a049;
+        .remove-from-cart:hover {
+            background-color: pink;
         }
     </style>
 </head>
@@ -117,8 +120,8 @@ while ($product =  mysqli_fetch_assoc($response)) {
                     <h2 class="product-name"><?php echo $product['productTitle']; ?></h2>
                     <p class="product-description"><?php echo $product['productDescription']; ?></p>
                     <div class="product-price">$<?php echo $product['productPrice']; ?></div>
-                    <form action="addToCart.php" method="post">
-                        <button class="add-to-cart" type="submit" name="cartBtn" value="<?php echo $product['product_id']; ?>">Add to Cart</button>
+                    <form action="removeFromCart.php" method="post">
+                        <button class="remove-from-cart" type="submit" name="cartBtn" value="<?php echo $product['product_id']; ?>">Remove From Cart</button>
                     </form>
                 </div>
             </div>

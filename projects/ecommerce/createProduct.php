@@ -22,15 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_FILES["productImage"]["size"] > 5000000) {
         $uploadOk = false;
     } else {
-    }
-    if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {
-        $sql = "INSERT INTO products (productTitle,productDescription,productCategory,productOwner,productImage) VALUES ('$name','$description','$category',$id,'$target_file')";
-        if (mysqli_query($conn, $sql)) {
-            $successMessage = "Product Created sucessfully";
-            header("Location: http://localhost:3000");
-            exit();
-        } else {
-            $errorMessage = "Something went wrong";
+        if (move_uploaded_file($_FILES["productImage"]["tmp_name"], $target_file)) {
+            $sql = "INSERT INTO products (productTitle,productDescription,productCategory,productOwner,productImage,productPrice) VALUES ('$name','$description','$category',$id,'$target_file',$price)";
+            if (mysqli_query($conn, $sql)) {
+                $successMessage = "Product Created sucessfully";
+                header("Location: http://localhost:3000");
+                exit();
+            } else {
+                $errorMessage = "Something went wrong";
+            }
         }
     }
 };
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 5px;
         }
 
-        button {
+        .product-form button {
             padding: 10px;
             background-color: #4CAF50;
             color: white;
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 16px;
         }
 
-        button:hover {
+        .product-form button:hover {
             background-color: #45a049;
         }
     </style>
@@ -120,8 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="form">
         <div class="form-container">
-            <p><?= $successMessage ?></p>
-            <p><?= $errorMessage ?></p>
+            <p class="success"><?= $successMessage ?></p>
+            <p class="err"><?= $errorMessage ?></p>
             <form class="product-form" action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
                 <h2>Create Product</h2>
                 <div class="form-group">
