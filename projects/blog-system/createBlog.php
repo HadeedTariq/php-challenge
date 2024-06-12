@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = sanitizer($_POST['description']);
     $content = sanitizer($_POST['editorContent']);
     $category = sanitizer($_POST['category']);
+    $currentDate = date("Y-m-d");
     $uploadOk = false;
 
     if (isset($blogTitle)  && isset($description) && isset($content) && isset($category)) {
@@ -20,9 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $target_file = $target_dir . basename($randomId . $_FILES['blogImage']['name']);
         if (move_uploaded_file($_FILES['blogImage']["tmp_name"], $target_file)) {
             $uploadOk = true;
-            $sql = "INSERT INTO blogpost (title,description,content,creator,category,blogImage) VALUES ('$blogTitle','$description','$content',$creatorId,'$category','$target_file')";
+            $sql = "INSERT INTO blogpost (title,description,content,creator,category,blogImage,created_at) VALUES ('$blogTitle','$description','$content',$creatorId,'$category','$target_file','$currentDate')";
             if (mysqli_query($conn, $sql)) {
                 $success = "Blog created successfully";
+            } else {
+                $generalErr = "Something went wrong";
             }
         } else {
             $uploadOk = false;

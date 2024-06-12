@@ -122,7 +122,7 @@ checkUser();
         </a>
         <ul class="nav-links">
             <?php if ($isUser) { ?>
-                <li><a href="blogs.php">Blogs</a></li>
+                <li><a href="myBlogs.php">My Blogs</a></li>
                 <li><a href="createBlog.php">Create Blog</a></li>
                 <form action="logout.php" method="get" class="form">
                     <button style="background-color: red; margin: 3px;" type="submit">Logout</button>

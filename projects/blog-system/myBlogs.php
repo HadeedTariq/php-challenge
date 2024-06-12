@@ -1,8 +1,11 @@
 <?php include "./config/navbar.php" ?>
-
 <?php
+if (!$isUser) {
+    redirect("/");
+}
+$userId = $_SESSION['id'];
 $blogPosts = [];
-$sql = "SELECT *,user.username AS creator_name FROM blogpost JOIN user ON  user.id=blogpost.creator";
+$sql = "SELECT blogpost.*,user.username AS creator_name FROM blogpost JOIN user ON  user.id=blogpost.creator WHERE blogpost.creator=$userId";
 $result = mysqli_query($conn, $sql);
 while ($blogPost = mysqli_fetch_assoc($result)) {
     array_push($blogPosts, $blogPost);
@@ -112,7 +115,8 @@ while ($blogPost = mysqli_fetch_assoc($result)) {
                             <?= $blogPost['created_at'] ?>
                         </span>
                     </div>
-                    <a href="#" class="read-more">Read More</a>
+                    <a href="deleteBlog.php?blogId=<?php echo urlencode($blogPost['blog_id']) ?>" class="err">Delete Blog</a>
+                    <a href="editBlog.php?blogId=<?php echo urlencode($blogPost['blog_id']) ?>" class="success">Edit Blog</a>
                 </div>
             </div>
         <?php }
