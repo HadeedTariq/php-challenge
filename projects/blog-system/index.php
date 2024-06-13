@@ -15,7 +15,7 @@ while ($blogPost = mysqli_fetch_assoc($result)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Card</title>
+    <title>Blogify</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .main {
@@ -112,7 +112,7 @@ while ($blogPost = mysqli_fetch_assoc($result)) {
                             <?= $blogPost['created_at'] ?>
                         </span>
                     </div>
-                    <a href="#" class="read-more">Read More</a>
+                    <a href="readBlog.php?blogId=<?php echo $blogPost['blog_id'] ?>" class="read-more">Read More</a>
                 </div>
             </div>
         <?php }
