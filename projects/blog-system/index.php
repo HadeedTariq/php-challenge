@@ -2,10 +2,22 @@
 
 <?php
 $blogPosts = [];
+if(!isset($_GET['category'])){
+
 $sql = "SELECT *,user.username AS creator_name FROM blogpost JOIN user ON  user.id=blogpost.creator";
 $result = mysqli_query($conn, $sql);
 while ($blogPost = mysqli_fetch_assoc($result)) {
     array_push($blogPosts, $blogPost);
+}
+}
+
+if(isset($_GET['category'])){
+    $category=$_GET['category'];
+    $categorySql="SELECT *,user.username AS creator_name FROM blogpost JOIN user ON  user.id=blogpost.creator WHERE category='$category'";
+    $result = mysqli_query($conn, $categorySql);
+while ($blogPost = mysqli_fetch_assoc($result)) {
+    $blogPosts=[$blogPost];
+}
 }
 ?>
 
@@ -95,8 +107,21 @@ while ($blogPost = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
+    <form id="categoryForm" action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>">
+        <select name="category" id="categorySelect">
+
+            <option value="">Select a category</option>
+            <option value="mern">Mern</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+
+
+        </select>
+    </form>
     <div class="main">
+
         <?php
+        if($blogPosts){
         foreach ($blogPosts as $blogPost) {
         ?>
             <div class="blog-card">
@@ -104,20 +129,34 @@ while ($blogPost = mysqli_fetch_assoc($result)) {
                 <div class="blog-card-content">
                     <h2 class="blog-card-title"><?= $blogPost['title'] ?></h2>
                     <p class="blog-card-description">
-                        <?= $blogPost['description'] ?>
+                        <?= substr($blogPost['description'],0,100) ?>...
                     </p>
                     <div class="blog-card-footer">
                         <span class="blog-card-author"><?= $blogPost['creator_name'] ?></span>
                         <span class="blog-card-date">
                             <?= $blogPost['created_at'] ?>
                         </span>
+                        <span style="color:red;">
+                            <?= $blogPost['category'] ?>
+                        </span>
                     </div>
                     <a href="readBlog.php?blogId=<?php echo $blogPost['blog_id'] ?>" class="read-more">Read More</a>
                 </div>
             </div>
         <?php }
+        }else{
         ?>
+        <p>No Blog post found</p>
+        <?php } ?>
     </div>
+    <script>
+        document.getElementById('categorySelect').addEventListener('change', function(e) {
+            e.preventDefault();
+            const category=e.target.value;
+            window.location.assign(`?category=${category}`)
+        });
+    </script>
+
 </body>
 
 </html>

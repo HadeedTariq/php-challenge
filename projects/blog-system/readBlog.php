@@ -44,8 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             margin-bottom: 10px;
         }
 
-        .content {
-            /* Add styles for rich text elements here (optional) */
+        .content pre {
+            background-color: black;
+            color: yellow;
+            padding: 12px;
+            font-size: 19px;
         }
 
         footer {
