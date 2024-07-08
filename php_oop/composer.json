@@ -1,0 +1,15 @@
+{
+  "name": "dell/php_oop",
+  "authors": [
+    {
+      "name": "hadeedtariq",
+      "email": "computeranalog351@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "app\\": "./"
+    }
+  },
+  "require": {}
+}
