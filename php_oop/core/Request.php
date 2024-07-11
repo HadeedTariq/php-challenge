@@ -4,10 +4,11 @@ namespace app\core;
 
 class Request
 {
+
     public function getPath()
     {
-        $path = $_SERVER['REQUEST_URI'] ?? "/";
-        $position = strpos($path, '?');
+        $path = $_SERVER['REQUEST_URI'] ?? '/';
+        $position = strpos($path, "?");
         if ($position === false) {
             return $path;
         }
