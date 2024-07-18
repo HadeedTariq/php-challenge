@@ -6,7 +6,7 @@ class Application
 {
     public static string $ROOT_DIR;
     public Response $response;
-    public Router $router;
+    public  Router $router;
     public Request $request;
     public function __construct($rootPath)
     {

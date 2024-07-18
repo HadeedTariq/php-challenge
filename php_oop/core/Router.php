@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+
+
 class Router
 {
     public Request $request;
@@ -34,6 +36,10 @@ class Router
     {
         $this->routes['get'][$path] = $callback;
     }
+    public function post($path, $callback)
+    {
+        $this->routes['post'][$path] = $callback;
+    }
 
     public function resolve()
     {
@@ -41,10 +47,10 @@ class Router
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
-            return "$path Not Found";
+            $this->response->setStatusCode(404);
+            return $this->renderView("_404");
         }
         if (is_string($callback)) {
-            $this->response->setStatusCode(404);
             return $this->renderView($callback);
         }
         return call_user_func($callback);

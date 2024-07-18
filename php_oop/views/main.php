@@ -109,6 +109,13 @@
                 width: 100%;
             }
         }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 89.3vh;
+        }
     </style>
 </head>
 
@@ -121,7 +128,10 @@
             </ul>
         </nav>
     </header>
-    {{content}}
+    <div class="container">
+
+        {{content}}
+    </div>
     <footer>
         <p>&copy; 2024 Company Name. All rights reserved.</p>
     </footer>
